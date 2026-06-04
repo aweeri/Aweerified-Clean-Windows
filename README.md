@@ -5,6 +5,12 @@
 
 ## Go through the normal installation steps:
 Using local login/password authorization is preferred. This will help avoid ugly `[Name] [Surname]` file paths being created.
+> [!CAUTION]
+> If you're struggling to find a way to use non-email login, look for a mysteriously named `domain join` button.
+
+
+## Update Windows:
+Press `Win+R` and enter `ms-settings:windowsupdate`, then check and confirm any available updates. 
 
 ## Activate Windows:
 1. Press the Win key, look up Powershell and open it with administrative privileges.
