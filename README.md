@@ -1,6 +1,5 @@
 # Instructions
 ## Download a Windows 11 LTSC ISO from a source such as:
-- https://www.microsoft.com/en-us/evalcenter/evaluate-windows-11-iot-enterprise-ltsc
 - windows-11-iot-enterprise-ltsc-2024 from archive.org
 
 ## Go through the normal installation steps:
