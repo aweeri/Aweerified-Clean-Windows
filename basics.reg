@@ -1,0 +1,17 @@
+Windows Registry Editor Version 5.00
+
+; 1. Restore Classic Context Menu
+[HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32]
+@=""
+
+; 2. Disable Windows Error Reporting (WER)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting]
+"Disabled"=dword:00000001
+
+; 3. Disable Telemetry and Data Collection
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
+"AllowTelemetry"=dword:00000000
+
+; 4. Disable visual delay for menu popups (improves UI responsiveness)
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"MenuShowDelay"="0"
