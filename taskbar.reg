@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+; 1. Left-align the taskbar and Start button
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"TaskbarAl"=dword:00000000
+
+; 2. Hide Task View, Widgets, and Chat buttons
+"ShowTaskViewButton"=dword:00000000
+"TaskbarDa"=dword:00000000
+"TaskbarMn"=dword:00000000
+
+; 3. Hide the Search Box completely
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search]
+"SearchboxTaskbarMode"=dword:00000000
