@@ -1,0 +1,21 @@
+# Run this in PowerShell as Administrator
+
+# 1. Initialize WinGet
+Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
+
+# 2. Install Core Apps
+winget install Microsoft.WindowsNotepad --source msstore --accept-package-agreements --accept-source-agreements
+winget install Microsoft.Paint --source msstore --accept-package-agreements --accept-source-agreements
+winget install Microsoft.WindowsCalculator --source msstore --accept-package-agreements --accept-source-agreements
+winget install Microsoft.WindowsCamera --source msstore --accept-package-agreements --accept-source-agreements
+winget install Microsoft.WindowsPhotos --source msstore --accept-package-agreements --accept-source-agreements
+winget install Microsoft.ScreenSketch --source msstore --accept-package-agreements --accept-source-agreements
+winget install Microsoft.WindowsTerminal --source msstore --accept-package-agreements --accept-source-agreements
+
+# 3. Install Media Extensions & Codecs
+winget install 9MVZQVXJBQ9V --source msstore --accept-package-agreements --accept-source-agreements
+winget install 9PMMSR1CGPWG --source msstore --accept-package-agreements --accept-source-agreements
+winget install 9NCTDW2W1BH8 --source msstore --accept-package-agreements --accept-source-agreements
+winget install 9N4D0MSV0403 --source msstore --accept-package-agreements --accept-source-agreements
+winget install 9N5TDP8VCMHS --source msstore --accept-package-agreements --accept-source-agreements
+winget install 9PG2DK419DRG --source msstore --accept-package-agreements --accept-source-agreements
