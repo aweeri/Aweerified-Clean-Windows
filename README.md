@@ -15,3 +15,5 @@ Press `Win+R` and enter `ms-settings:windowsupdate`, then check and confirm any 
 1. Press the Win key, look up Powershell and open it with administrative privileges.
 2. In Powershell, paste in the following: `irm https://get.activated.win | iex` then press enter.
 3. In the window that pops up select `[1] HWID` and follow the instructions on screen.
+---
+### Remaining steps are a Work In Progress.
