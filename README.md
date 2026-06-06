@@ -52,7 +52,7 @@ Windows 11 introduced awful "pretty-ified" context menus that require more click
 ### [NanaZIP](https://github.com/M2Team/NanaZip)
 It's a 7-Zip derivative intended for the modern Windows experience.
 
-🔽 To install it, run `winget install -e --id M2Team.NanaZip` in the Command Prompt.
+🔽 To install it, run `winget install M2Team.NanaZip --source winget` in the Command Prompt.
 ### [WinEnter](https://github.com/aweeri/WinEnter)
 This tiny utility hooks your keyboard to open CMD or Powershell whenever you press `Win+Enter`. It sits quietly in the system tray.
 
