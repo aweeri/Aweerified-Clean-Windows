@@ -7,7 +7,7 @@ I've organized the importance of each step as follows:
 
 🟥 - Critical. Skipping these steps will ruin your experience and may make following further steps impossible.
 
-🟧 - Highly advised. If you don't want do do these, you're free to, but I'll consider you weird.
+🟧 - Highly advised. If you don't want to do these, you're free to, but I'll consider you weird.
 
 🟩 - Very useful; You are however absolutely free to skip these if you want, I don't care.
 
