@@ -1,51 +1,34 @@
 @echo off
-:: Check for admin rights and auto-elevate
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-    echo Requesting administrative privileges...
-    powershell -Command "Start-Process '%~dpnx0' -Verb RunAs"
-    exit /b
+title LTSC Essential Apps Installer
+echo Installing LTSC Essential Apps and Media Extensions via WinGet...
+echo Note: Frameworks (AppRuntime, UI.Xaml, VCLibs, .NET Native) are resolved automatically.
+echo.
+
+:: Microsoft Applications
+:: 9WZDNCRFHVN5 - Windows Calculator
+:: 9WZDNCRFJBBG - Windows Camera
+:: 9MSMLRH6LZF3 - Windows Notepad
+:: 9PCFS5B6T72H - Paint
+:: 9WZDNCRFJBH4 - Microsoft Photos
+:: 9MZ95KL8MR0L - Snipping Tool (ScreenSketch)
+:: 9N0DX20HK701 - Windows Terminal
+
+:: Media Extensions
+:: 9MVZQVXABDWM - AV1 Video Extension
+:: 9PMMSR1CGPWG - HEIF Image Extensions
+:: 9NCTDW2W1BH8 - Raw Image Extension
+:: 9N4D0MV1FCCW - VP9 Video Extensions
+:: 9N5TDP8VCMHS - Web Media Extensions
+:: 9PG2DK419DRG - Webp Image Extensions
+
+set "APPS=9WZDNCRFHVN5 9WZDNCRFJBBG 9MSMLRH6LZF3 9PCFS5B6T72H 9WZDNCRFJBH4 9MZ95KL8MR0L 9N0DX20HK701 9MVZQVXABDWM 9PMMSR1CGPWG 9NCTDW2W1BH8 9N4D0MV1FCCW 9N5TDP8VCMHS 9PG2DK419DRG"
+
+for %%A in (%APPS%) do (
+    echo ---------------------------------------------------
+    echo Installing component ID: %%A
+    winget install --id %%A --exact --source msstore --accept-package-agreements --accept-source-agreements
 )
 
-echo 1. Initializing WinGet...
-powershell -Command "Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe"
-
-echo.
-echo 2. Bypassing Microsoft Store certificate pinning...
-winget settings --enable BypassCertificatePinningForMicrosoftStore
-
-echo.
-echo 3. Force-updating AppInstaller from GitHub and repairing sources...
-:: This bypasses the broken Store API and pulls the new winget engine directly.
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri 'https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx' -OutFile \"$env:TEMP\vclibs.appx\"; Add-AppxPackage -Path \"$env:TEMP\vclibs.appx\"; Invoke-WebRequest -Uri 'https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' -OutFile \"$env:TEMP\winget.msixbundle\"; Add-AppxPackage -Path \"$env:TEMP\winget.msixbundle\""
-winget source reset --force
-winget source update
-
-echo.
-echo 4. Installing Core Apps...
-winget install Microsoft.WindowsNotepad --source msstore --accept-package-agreements --accept-source-agreements
-winget install Microsoft.Paint --source msstore --accept-package-agreements --accept-source-agreements
-winget install Microsoft.WindowsCalculator --source msstore --accept-package-agreements --accept-source-agreements
-winget install Microsoft.WindowsCamera --source msstore --accept-package-agreements --accept-source-agreements
-winget install Microsoft.WindowsPhotos --source msstore --accept-package-agreements --accept-source-agreements
-winget install Microsoft.ScreenSketch --source msstore --accept-package-agreements --accept-source-agreements
-winget install Microsoft.WindowsTerminal --source msstore --accept-package-agreements --accept-source-agreements
-
-echo.
-echo 5. Installing Media Extensions...
-winget install 9MVZQVXJBQ9V --source msstore --accept-package-agreements --accept-source-agreements
-winget install 9PMMSR1CGPWG --source msstore --accept-package-agreements --accept-source-agreements
-winget install 9NCTDW2W1BH8 --source msstore --accept-package-agreements --accept-source-agreements
-winget install 9N4D0MSV0403 --source msstore --accept-package-agreements --accept-source-agreements
-winget install 9N5TDP8VCMHS --source msstore --accept-package-agreements --accept-source-agreements
-winget install 9PG2DK419DRG --source msstore --accept-package-agreements --accept-source-agreements
-
-echo.
-echo 6. Restoring security pinning...
-winget settings --disable BypassCertificatePinningForMicrosoftStore
-
-echo.
-echo ==========================================
-echo Installation Complete!
-echo ==========================================
+echo ---------------------------------------------------
+echo All specified applications have been processed.
 pause
