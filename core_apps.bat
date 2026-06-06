@@ -17,7 +17,7 @@ winget settings --enable BypassCertificatePinningForMicrosoftStore
 echo.
 echo 3. Force-updating AppInstaller from GitHub and repairing sources...
 :: This bypasses the broken Store API and pulls the new winget engine directly.
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri 'https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' -OutFile \"$env:TEMP\winget.msixbundle\"; Add-AppxPackage -Path \"$env:TEMP\winget.msixbundle\""
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri 'https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx' -OutFile \"$env:TEMP\vclibs.appx\"; Add-AppxPackage -Path \"$env:TEMP\vclibs.appx\"; Invoke-WebRequest -Uri 'https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' -OutFile \"$env:TEMP\winget.msixbundle\"; Add-AppxPackage -Path \"$env:TEMP\winget.msixbundle\""
 winget source reset --force
 winget source update
 
