@@ -1,5 +1,14 @@
 @echo off
 title LTSC Essential Apps Installer
+
+:: Request administrator privileges to run protected commands
+net session >nul 2>&1
+if not %errorLevel% == 0 (
+    echo Requesting administrative privileges...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit /b
+)
+
 echo Installing LTSC Essential Apps and Media Extensions via WinGet...
 echo Note: Frameworks (AppRuntime, UI.Xaml, VCLibs, .NET Native) are resolved automatically.
 echo.
@@ -7,6 +16,7 @@ echo.
 :: Microsoft Applications
 :: 9WZDNCRFHVN5 - Windows Calculator
 :: 9WZDNCRFJBBG - Windows Camera
+:: 9WZDNCRFJ3PR - Windows Alarms & Clock
 :: 9MSMLRH6LZF3 - Windows Notepad
 :: 9PCFS5B6T72H - Paint
 :: 9WZDNCRFJBH4 - Microsoft Photos
@@ -21,7 +31,7 @@ echo.
 :: 9N5TDP8VCMHS - Web Media Extensions
 :: 9PG2DK419DRG - Webp Image Extensions
 
-set "APPS=9WZDNCRFHVN5 9WZDNCRFJBBG 9MSMLRH6LZF3 9PCFS5B6T72H 9WZDNCRFJBH4 9MZ95KL8MR0L 9N0DX20HK701 9MVZQVXABDWM 9PMMSR1CGPWG 9NCTDW2W1BH8 9N4D0MV1FCCW 9N5TDP8VCMHS 9PG2DK419DRG"
+set "APPS=9WZDNCRFHVN5 9WZDNCRFJBBG 9WZDNCRFJ3PR 9MSMLRH6LZF3 9PCFS5B6T72H 9WZDNCRFJBH4 9MZ95KL8MR0L 9N0DX20HK701 9MVZQVXABDWM 9PMMSR1CGPWG 9NCTDW2W1BH8 9N4D0MV1FCCW 9N5TDP8VCMHS 9PG2DK419DRG"
 
 for %%A in (%APPS%) do (
     echo ---------------------------------------------------
@@ -31,4 +41,23 @@ for %%A in (%APPS%) do (
 
 echo ---------------------------------------------------
 echo All specified applications have been processed.
+echo ---------------------------------------------------
+echo Taking ownership and disabling legacy LTSC applications...
+
+:: Disable Legacy Calculator
+takeown /f C:\Windows\System32\calc.exe /a
+icacls C:\Windows\System32\calc.exe /grant Administrators:F
+ren C:\Windows\System32\calc.exe calc.exe.bak
+
+:: Disable Legacy Notepad
+takeown /f C:\Windows\System32\notepad.exe /a
+icacls C:\Windows\System32\notepad.exe /grant Administrators:F
+ren C:\Windows\System32\notepad.exe notepad.exe.bak
+
+:: Disable Legacy Paint
+takeown /f C:\Windows\System32\mspaint.exe /a
+icacls C:\Windows\System32\mspaint.exe /grant Administrators:F
+ren C:\Windows\System32\mspaint.exe mspaint.exe.bak
+
+echo Legacy applications disabled.
 pause
