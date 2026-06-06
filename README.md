@@ -34,6 +34,19 @@ Press `Win+R` and enter `ms-settings:windowsupdate`, then check and confirm any 
 ## 🟥 Install Windows Store and WinGet:
 This one is rather easy, simply follow the instructions from https://github.com/minihub/LTSC-Add-MicrosoftStore/
 
+## 🟥 Bring Back the essentials, normally not present on LTSC
+Download and run [core_apps.bat](https://github.com/aweeri/Aweerified-Clean-Windows/blob/main/core_apps.bat); it will download and update the following:
+
+| Apps | Extensions |
+| :--- | :--- |
+| Windows Calculator | AV1 Video Extension |
+| Windows Camera | HEIF Image Extensions |
+| Windows Alarms & Clock | Raw Image Extension |
+| Windows Notepad | VP9 Video Extensions |
+| Microsoft Photos | Web Media Extensions |
+| Snipping Tool | Webp Image Extensions |
+| Windows Terminal | |
+
 ## 🟧 General UI productivity adjustments
 ### Make the Taskbar usable:
 <img width="391" height="48" alt="image (2)" src="https://github.com/user-attachments/assets/f9b62d2a-e7c9-4ea8-b3b8-b8e63cec5123" />
@@ -49,22 +62,12 @@ Windows 11 introduced awful "pretty-ified" context menus that require more click
 2. Run the downloaded file and confirm when prompted.
 
 ## 🟩 Install additional software to enhance the experience
-### [NanaZIP](https://github.com/M2Team/NanaZip)
-It's a 7-Zip derivative intended for the modern Windows experience.
 
-🔽 To install it, run `winget install M2Team.NanaZip --source winget` in the Command Prompt.
-### [WinEnter](https://github.com/aweeri/WinEnter)
-This tiny utility hooks your keyboard to open CMD or Powershell whenever you press `Win+Enter`. It sits quietly in the system tray.
-
-🔽 To install it, download `winenter.exe` from the repository, open the Windows Run dialog (press `Win + R`), type `shell:startup`, and move the downloaded executable into that folder.
-### [FFpresets](https://github.com/aweeri/FFpresets)
-An ULTRA-lightweight video conversion tool built directly into your Windows right-click context menu. It lets you run ffmpeg commands that you most often need without having to mess with filenames and remembering the exact arguments.
-
-🔽 To install it, run the installation script included in the [zip](https://github.com/aweeri/FFpresets/archive/refs/heads/main.zip).
-### [Wcap](https://github.com/mmozeiko/wcap)
-A small and efficient screen recording utility.
-
-🔽 To install it, download `wcap.exe` from the repository and place it in a directory of choice (For example `C:\Tools`), then press `Win+R` and type `shell:startup`, then throw a shortcut to `wcap.exe` into the startup directory.
-
+| Software | Description | Installation |
+| :--- | :--- | :--- |
+| **[NanaZIP](https://github.com/M2Team/NanaZip)** | It's a 7-Zip derivative intended for the modern Windows experience. | Run `winget install M2Team.NanaZip --source winget` in the Command Prompt. |
+| **[WinEnter](https://github.com/aweeri/WinEnter)** | This tiny utility hooks your keyboard to open CMD or Powershell whenever you press `Win+Enter`. It sits quietly in the system tray. | Download `winenter.exe` from the repository, press `Win + R`, type `shell:startup`, and move the executable into that folder. |
+| **[FFpresets](https://github.com/aweeri/FFpresets)** | An ULTRA-lightweight video conversion tool built directly into your Windows right-click context menu. It lets you run ffmpeg commands that you most often need without having to mess with filenames or arguments. | Run the installation script included in the [zip](https://github.com/aweeri/FFpresets/archive/refs/heads/main.zip). |
+| **[Wcap](https://github.com/mmozeiko/wcap)** | A small and efficient screen recording utility. | Download `wcap.exe` to a directory of choice (e.g., `C:\Tools`), press `Win+R` and type `shell:startup`, then throw a shortcut to `wcap.exe` into the startup directory. |
 ---
 # Remaining steps are a Work In Progress.
