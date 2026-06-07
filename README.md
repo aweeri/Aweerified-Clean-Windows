@@ -11,7 +11,12 @@ I've organized the importance of each step as follows:
 
 🟩 - Very useful; You are however absolutely free to skip these if you want, I don't care.
 
-# Instructions
+# Automatic Installation
+Open Powershell and run 
+
+`iwr -useb https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat`
+
+# Manual Installation Steps
 ## 🟥 Install Windows 11 LTSC
 This version of Windows is a stripped-down, stable version built for professional, "set-and-forget" hardware (like ATMs or medical devices). It lacks bloatware and forced feature updates.
 ### Download a Windows 11 LTSC ISO:
@@ -71,7 +76,3 @@ Windows 11 introduced awful "pretty-ified" context menus that require more click
 | **[Wcap](https://github.com/mmozeiko/wcap)** | A small and efficient screen recording utility. | Download `wcap.exe` to a directory of choice (e.g., `C:\Tools`), press `Win+R` and type `shell:startup`, then throw a shortcut to `wcap.exe` into the startup directory. |
 ---
 # Remaining steps are a Work In Progress.
-
----
-test autosetup
-`iwr -useb https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat`
