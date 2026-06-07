@@ -61,7 +61,18 @@ Write-Host "Deploying Utilities..." -ForegroundColor Cyan
 $StartupPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/winenter.exe" -OutFile "$StartupPath\winenter.exe"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/wcap-x64.exe" -OutFile "$StartupPath\wcap.exe"
+
+$ToolsPath = "C:\Tools"
+if (-not (Test-Path -Path $ToolsPath)) {
+    New-Item -ItemType Directory -Force -Path $ToolsPath | Out-Null
+}
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/wcap-x64.exe" -OutFile "$ToolsPath\wcap.exe"
+
+$WshShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut("$StartupPath\wcap.lnk")
+$Shortcut.TargetPath = "$ToolsPath\wcap.exe"
+$Shortcut.WorkingDirectory = $ToolsPath
+$Shortcut.Save()
 
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/FFpresets.zip" -OutFile "$TempDir\ffpresets.zip"
 Expand-Archive -Path "$TempDir\ffpresets.zip" -DestinationPath "$TempDir\ffpresets" -Force
