@@ -58,4 +58,3 @@ icacls C:\Windows\System32\notepad.exe /grant Administrators:F
 ren C:\Windows\System32\notepad.exe notepad.exe.bak
 
 echo Legacy applications disabled.
-pause
