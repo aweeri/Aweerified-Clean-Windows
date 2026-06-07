@@ -71,3 +71,7 @@ Windows 11 introduced awful "pretty-ified" context menus that require more click
 | **[Wcap](https://github.com/mmozeiko/wcap)** | A small and efficient screen recording utility. | Download `wcap.exe` to a directory of choice (e.g., `C:\Tools`), press `Win+R` and type `shell:startup`, then throw a shortcut to `wcap.exe` into the startup directory. |
 ---
 # Remaining steps are a Work In Progress.
+
+---
+test autosetup
+`iwr -useb https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat`
