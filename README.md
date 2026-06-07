@@ -29,8 +29,7 @@ Using local login/password authorization is preferred. This will help avoid ugly
 ## 🟥 Run the automated script in Powershell
 This will go through all of the steps described in the [Manual Installation Steps](https://github.com/aweeri/Aweerified-Clean-Windows#manual-installation-steps) section
 ```powershell
-iwr -useb [https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat](https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat) `
-    -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat
+iwr -useb [https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat](https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat) -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat
 ```
 ## 🟥 Update Windows:
 Press `Win+R` and enter `ms-settings:windowsupdate`, then check and confirm any available updates. 
