@@ -12,3 +12,8 @@ Windows Registry Editor Version 5.00
 ; 3. Hide the Search Box completely
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search]
 "SearchboxTaskbarMode"=dword:00000000
+
+; 4. Enable Dark Mode for Windows and Apps
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize]
+"AppsUseLightTheme"=dword:00000000
+"SystemUsesLightTheme"=dword:00000000

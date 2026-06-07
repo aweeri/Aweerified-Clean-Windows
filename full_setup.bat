@@ -14,6 +14,49 @@ pause
 exit /b
 #>
 
+# 0. Select Software GUI
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+$AvailableApps = @(
+    "M2Team.NanaZip", "Mozilla.Firefox", "Discord.Discord",
+    "Microsoft.PowerToys", "voidtools.Everything", "Notepad++.Notepad++",
+    "qBittorrent.qBittorrent", "Git.Git", "Microsoft.VisualStudioCode",
+    "Python.Python.3.12", "Gyan.FFmpeg", "VideoLAN.VLC", "KiCad.KiCad",
+    "Arduino.ArduinoIDE", "ShareX.ShareX", "TimKosse.FileZilla",
+    "Mozilla.Thunderbird", "Spotify.Spotify", "Valve.Steam", "Google.Chrome",
+    "Custom: winenter", "Custom: wcap", "Custom: FFpresets"
+)
+
+$Form = New-Object System.Windows.Forms.Form
+$Form.Text = "Select Software to Install"
+$Form.Size = New-Object System.Drawing.Size(300, 420)
+$Form.StartPosition = "CenterScreen"
+$Form.Topmost = $true
+
+$CheckedListBox = New-Object System.Windows.Forms.CheckedListBox
+$CheckedListBox.Size = New-Object System.Drawing.Size(260, 310)
+$CheckedListBox.Location = New-Object System.Drawing.Point(10, 10)
+$CheckedListBox.CheckOnClick = $true
+foreach ($App in $AvailableApps) {
+    $CheckedListBox.Items.Add($App, $false) | Out-Null
+}
+$Form.Controls.Add($CheckedListBox)
+
+$ButtonOK = New-Object System.Windows.Forms.Button
+$ButtonOK.Location = New-Object System.Drawing.Point(100, 335)
+$ButtonOK.Size = New-Object System.Drawing.Size(80, 30)
+$ButtonOK.Text = "OK"
+$ButtonOK.Add_Click({ $Form.Close() })
+$Form.Controls.Add($ButtonOK)
+
+$Form.ShowDialog() | Out-Null
+
+$SelectedApps = @()
+foreach ($Item in $CheckedListBox.CheckedItems) {
+    $SelectedApps += $Item
+}
+
 # 1. Activate Windows (Unattended HWID)
 Write-Host "Activating Windows..." -ForegroundColor Cyan
 iex "& { $(irm https://get.activated.win) } /HWID"
@@ -53,31 +96,46 @@ reg import "$TempDir\basics.reg"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 # 5. Install Software via WinGet
-Write-Host "Installing NanaZip..." -ForegroundColor Cyan
-winget install M2Team.NanaZip --accept-package-agreements --accept-source-agreements --silent
+Write-Host "Installing Software..." -ForegroundColor Cyan
+if ($SelectedApps.Count -gt 0) {
+    foreach ($App in $SelectedApps) {
+        if ($App -notmatch "^Custom:") {
+            Write-Host "Installing $App..." -ForegroundColor Gray
+            winget install $App --accept-package-agreements --accept-source-agreements --silent
+        }
+    }
+} else {
+    Write-Host "No software selected for installation. Skipping." -ForegroundColor Yellow
+}
 
 # 6. Deploy Custom Utilities to Startup
 Write-Host "Deploying Utilities..." -ForegroundColor Cyan
 $StartupPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/winenter.exe" -OutFile "$StartupPath\winenter.exe"
-
-$ToolsPath = "C:\Tools"
-if (-not (Test-Path -Path $ToolsPath)) {
-    New-Item -ItemType Directory -Force -Path $ToolsPath | Out-Null
+if ($SelectedApps -contains "Custom: winenter") {
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/winenter.exe" -OutFile "$StartupPath\winenter.exe"
 }
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/wcap-x64.exe" -OutFile "$ToolsPath\wcap.exe"
 
-$WshShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("$StartupPath\wcap.lnk")
-$Shortcut.TargetPath = "$ToolsPath\wcap.exe"
-$Shortcut.WorkingDirectory = $ToolsPath
-$Shortcut.Save()
+if ($SelectedApps -contains "Custom: wcap") {
+    $ToolsPath = "C:\Tools"
+    if (-not (Test-Path -Path $ToolsPath)) {
+        New-Item -ItemType Directory -Force -Path $ToolsPath | Out-Null
+    }
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/wcap-x64.exe" -OutFile "$ToolsPath\wcap.exe"
 
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/FFpresets.zip" -OutFile "$TempDir\ffpresets.zip"
-Expand-Archive -Path "$TempDir\ffpresets.zip" -DestinationPath "$TempDir\ffpresets" -Force
-$InstallBat = Get-ChildItem -Path "$TempDir\ffpresets" -Filter "install.bat" -Recurse | Select-Object -First 1
-Start-Process -FilePath $InstallBat.FullName -Wait
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$StartupPath\wcap.lnk")
+    $Shortcut.TargetPath = "$ToolsPath\wcap.exe"
+    $Shortcut.WorkingDirectory = $ToolsPath
+    $Shortcut.Save()
+}
+
+if ($SelectedApps -contains "Custom: FFpresets") {
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/Resources/FFpresets.zip" -OutFile "$TempDir\ffpresets.zip"
+    Expand-Archive -Path "$TempDir\ffpresets.zip" -DestinationPath "$TempDir\ffpresets" -Force
+    $InstallBat = Get-ChildItem -Path "$TempDir\ffpresets" -Filter "install.bat" -Recurse | Select-Object -First 1
+    Start-Process -FilePath $InstallBat.FullName -Wait
+}
 
 # 7. Clean up and Restart Explorer
 Write-Host "Cleaning up..." -ForegroundColor Cyan
