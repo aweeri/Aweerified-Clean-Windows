@@ -15,6 +15,8 @@ I've organized the importance of each step as follows:
 
 ---
 
+<br>
+
 # 🤖 Automatic Installation
 ## 🟥 Install Windows 11 LTSC
 This version of Windows is a stripped-down, stable version built for professional, "set-and-forget" hardware (like ATMs or medical devices). It lacks bloatware and forced feature updates.
@@ -40,6 +42,8 @@ Enjoy your Windows!
 <br>
 
 ---
+
+<br>
 
 # 👷 Manual Installation Steps
 ## 🟥 Install Windows 11 LTSC
