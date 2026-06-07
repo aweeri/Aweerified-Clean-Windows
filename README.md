@@ -11,12 +11,38 @@ I've organized the importance of each step as follows:
 
 🟩 - Very useful; You are however absolutely free to skip these if you want, I don't care.
 
-# Automatic Installation
-Open Powershell and run 
+<br>
 
-`iwr -useb https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat`
+---
 
-# Manual Installation Steps
+# 🤖 Automatic Installation
+## 🟥 Install Windows 11 LTSC
+This version of Windows is a stripped-down, stable version built for professional, "set-and-forget" hardware (like ATMs or medical devices). It lacks bloatware and forced feature updates.
+### Download a Windows 11 LTSC ISO:
+- Use a search engine to look for `windows-11-iot-enterprise-ltsc-2024 site:archive.org`
+
+### Go through the normal installation steps:
+Using local login/password authorization is preferred. This will help avoid ugly `[Name] [Surname]` file paths being created.
+> [!CAUTION]
+> If you're struggling to find a way to use non-email login, look for a mysteriously named `domain join` button.
+
+## 🟥 Run the automated script in Powershell
+This will go through all of the steps described in the [Manual Installation Steps](https://github.com/aweeri/Aweerified-Clean-Windows#manual-installation-steps) section
+```powershell
+iwr -useb [https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat](https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/full_setup.bat) `
+    -outfile $env:TEMP\aweerified.bat; & $env:TEMP\aweerified.bat
+```
+## 🟥 Update Windows:
+Press `Win+R` and enter `ms-settings:windowsupdate`, then check and confirm any available updates. 
+
+## 🟥 Done!
+Enjoy your Windows!
+
+<br>
+
+---
+
+# 👷 Manual Installation Steps
 ## 🟥 Install Windows 11 LTSC
 This version of Windows is a stripped-down, stable version built for professional, "set-and-forget" hardware (like ATMs or medical devices). It lacks bloatware and forced feature updates.
 ### Download a Windows 11 LTSC ISO:
@@ -74,5 +100,6 @@ Windows 11 introduced awful "pretty-ified" context menus that require more click
 | **[WinEnter](https://github.com/aweeri/WinEnter)** | This tiny utility hooks your keyboard to open CMD or Powershell whenever you press `Win+Enter`. It sits quietly in the system tray. | Download `winenter.exe` from the repository, press `Win + R`, type `shell:startup`, and move the executable into that folder. |
 | **[FFpresets](https://github.com/aweeri/FFpresets)** | An ULTRA-lightweight video conversion tool built directly into your Windows right-click context menu. It lets you run ffmpeg commands that you most often need without having to mess with filenames or arguments. | Run the installation script included in the [zip](https://github.com/aweeri/FFpresets/archive/refs/heads/main.zip). |
 | **[Wcap](https://github.com/mmozeiko/wcap)** | A small and efficient screen recording utility. | Download `wcap.exe` to a directory of choice (e.g., `C:\Tools`), press `Win+R` and type `shell:startup`, then throw a shortcut to `wcap.exe` into the startup directory. |
----
-# Remaining steps are a Work In Progress.
+
+## 🟥 Done!
+Enjoy your Windows!
