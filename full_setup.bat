@@ -70,15 +70,68 @@ New-Item -ItemType Directory -Force -Path $TempDir | Out-Null
 Start-Process -FilePath "wsreset.exe" -ArgumentList "-i" -WindowStyle Hidden
 
 Write-Host "Waiting for Store installation to complete (this may take a few minutes)..." -ForegroundColor Cyan
-while (!(Get-AppxPackage -Name "*Microsoft.WindowsStore*")) {
+$storeDeadline = (Get-Date).AddMinutes(10)
+$storeInstalled = $false
+while ((Get-Date) -lt $storeDeadline) {
+    if (Get-AppxPackage -Name "*Microsoft.WindowsStore*" -ErrorAction SilentlyContinue) {
+        $storeInstalled = $true
+        break
+    }
     Start-Sleep -Seconds 5
 }
 
-Write-Host "Bootstrapping WinGet..." -ForegroundColor Cyan
-$ProgressPreference = 'SilentlyContinue'
-Install-PackageProvider -Name NuGet -Force | Out-Null
-Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
-Repair-WinGetPackageManager -AllUsers
+if (-not $storeInstalled) {
+    throw "Microsoft Store did not appear after wsreset.exe. Check your network, Windows Update services, and run the script again."
+}
+
+function Wait-ForWinGetCli {
+    param([int]$TimeoutSeconds = 180)
+    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+    while ((Get-Date) -lt $deadline) {
+        if (Get-Command winget -ErrorAction SilentlyContinue) {
+            return $true
+        }
+        Start-Sleep -Seconds 5
+    }
+    return $false
+}
+
+function Ensure-WinGet {
+    $attempt = 0
+    while ($attempt -lt 5) {
+        $attempt++
+        Write-Host "Bootstrapping WinGet (attempt $attempt of 5)..." -ForegroundColor Cyan
+        try {
+            Install-PackageProvider -Name NuGet -Force -Scope CurrentUser -ErrorAction Stop | Out-Null
+            Install-Module -Name Microsoft.WinGet.Client -Force -AllowClobber -Scope CurrentUser -Repository PSGallery -ErrorAction Stop | Out-Null
+            Repair-WinGetPackageManager -AllUsers -ErrorAction Stop | Out-Null
+        } catch {
+            Write-Host "WinGet bootstrap attempt $attempt failed: $($_.Exception.Message)" -ForegroundColor Yellow
+            if ($attempt -ge 5) {
+                throw "WinGet bootstrap failed after 5 attempts. Please ensure Microsoft Store and App Installer are available, then rerun the script."
+            }
+            Start-Sleep -Seconds 15
+            continue
+        }
+
+        if (Wait-ForWinGetCli -TimeoutSeconds 120) {
+            return
+        }
+
+        Write-Host "WinGet CLI still not present after repair. Retrying..." -ForegroundColor Yellow
+        Start-Sleep -Seconds 15
+    }
+
+    throw "WinGet could not be bootstrapped. Please run Windows Update and ensure Microsoft Store/App Installer are available."
+}
+
+Ensure-WinGet
+
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    throw "WinGet command not found after bootstrap. The script cannot continue."
+}
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 # 3. Restore Core Apps
 Write-Host "Installing Core Apps..." -ForegroundColor Cyan
