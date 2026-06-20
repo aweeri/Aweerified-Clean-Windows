@@ -67,6 +67,10 @@ Press `Win+R` and enter `ms-settings:windowsupdate`, then check and confirm any 
 
 ## 🟥 Install Windows Store and WinGet:
 This one is rather easy, simply follow the instructions from https://github.com/minihub/LTSC-Add-MicrosoftStore/
+> [!CAUTION]
+> The automated script uses an alternative, more reliable method that does not require external scripts. 
+
+
 
 ## 🟥 Bring Back the essentials, normally not present on LTSC
 Download and run [core_apps.bat](https://github.com/aweeri/Aweerified-Clean-Windows/blob/main/core_apps.bat); it will download and update the following:
