@@ -82,8 +82,14 @@ Download and run [core_apps.bat](https://github.com/aweeri/Aweerified-Clean-Wind
 | Windows Alarms & Clock | Raw Image Extension |
 | Windows Notepad | VP9 Video Extensions |
 | Microsoft Photos | Web Media Extensions |
-| Snipping Tool | Webp Image Extensions |
+| Windows Media Player | Webp Image Extensions |
+| Snipping Tool | |
 | Windows Terminal | |
+
+> [!NOTE]
+> Once the apps are in place, the script also points `.jpg`, `.png`, `.heic`, `.mp4`, `.mkv`, `.mp3`, `.flac` and friends at Photos and Media Player (and `.txt`/`.log`/`.ini` at Notepad, since the legacy `notepad.exe` gets renamed), so double-clicking a file no longer ends in "How do you want to open this file?" or in nothing at all.
+> Windows 11 hash-protects its default-app keys, so [defaults.ps1](https://github.com/aweeri/Aweerified-Clean-Windows/blob/main/defaults.ps1) clears the old choice and points the per-user file association at the freshly installed app instead of trying to forge that hash.
+> Already installed the apps by hand? Run `iwr -useb https://raw.githubusercontent.com/aweeri/Aweerified-Clean-Windows/main/defaults.ps1 | iex` in a normal (non-elevated) PowerShell window.
 
 ## 🟧 General UI productivity adjustments
 ### Make the Taskbar usable:
@@ -96,7 +102,7 @@ We're also going to left-align the taskbar and get rid of useless buttons.
 
 ### Fix the Context Menus:
 Windows 11 introduced awful "pretty-ified" context menus that require more clicks than what's really needed. We're going to revert to how they normally work while also removing the useless delay. 
-1. Download [basics.reg](https://github.com/aweeri/Aweerified-Clean-Windows/blob/main/taskbar.reg).
+1. Download [basics.reg](https://github.com/aweeri/Aweerified-Clean-Windows/blob/main/basics.reg).
 2. Run the downloaded file and confirm when prompted.
 
 ## 🟩 Install additional software to enhance the experience
